@@ -9,7 +9,11 @@ fail=0
 for target in ${TARGETS[@]}; do
 
 
-    gcc -o $target.out -D TEST $target
+    if ! gcc -o $target.out -D TEST $target; then
+        echo -e "\e[31mcompile error\e[m"
+        continue
+    fi
+
     if $target.out; then
         echo -e "$target: \e[32mpass\e[m"
         pass=$(expr $pass + 1)
